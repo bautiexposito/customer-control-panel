@@ -32,8 +32,8 @@ public class CustomerServiceImpl implements CustomerService{
         return null;
     }
 
-    public List<Customer> searchCustomer(String firstName, String lastName, String email, String address) {
-        return null;
+    public List<Customer> searchCustomer(String email, String address) {
+        return repository.findByEmailOrAddress(email, address);
     }
 
     public void addCustomer(Customer customer) {

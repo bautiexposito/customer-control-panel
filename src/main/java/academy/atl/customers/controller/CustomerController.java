@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/customer")
 public class CustomerController {
 
     @Autowired
@@ -26,11 +27,9 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public List<Customer> searchCustomer(@RequestParam(value = "firstName", required = false) String firstName,
-                                                 @RequestParam(value = "lastName", required = false) String lastName,
-                                                 @RequestParam(value = "email", required = false) String email,
-                                                 @RequestParam(value = "address", required = false) String address) {
-        return customerService.searchCustomer(firstName, lastName, email, address);
+    public List<Customer> searchCustomer(@RequestParam(value = "email", required = false) String email,
+                                         @RequestParam(value = "address", required = false) String address) {
+        return customerService.searchCustomer(email, address);
     }
 
     @PostMapping

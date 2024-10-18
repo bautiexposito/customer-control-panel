@@ -11,7 +11,7 @@ public interface CustomerService {
 
     Customer getCustomerByID(Integer id);
 
-    List<Customer> searchCustomer(String firstName, String lastName, String email, String address);
+    List<Customer> searchCustomer(String email, String address);
 
     void addCustomer(Customer customer);
 
