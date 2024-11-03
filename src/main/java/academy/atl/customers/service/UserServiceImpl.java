@@ -1,7 +1,8 @@
 package academy.atl.customers.service;
 
+import academy.atl.customers.dto.UserDto;
 import academy.atl.customers.model.User;
-import academy.atl.customers.persistence.UserDao;
+import academy.atl.customers.repository.UserDao;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,18 +40,29 @@ public class UserServiceImpl implements UserService{
         return repository.findByEmailOrAddress(email, address);
     }
 
-    public void addUser(User user) {
+    public void addUser(UserDto userDto) {
+        User user = new User(userDto);
+
         String hashPassword = Hashing.sha256()
-                .hashString(user.getPassword() + SECRET_KEY, StandardCharsets.UTF_8)
+                .hashString(userDto.getPassword() + SECRET_KEY, StandardCharsets.UTF_8)
                 .toString();
 
         user.setPassword(hashPassword);
         repository.save(user);
     }
 
-    public void updateUser(Integer id, User updateUser) {
-        updateUser.setId(id);
-        repository.save(updateUser);
+    public void updateUser(Integer id, UserDto userDto) {
+        Optional<User> optionalUser = repository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
+            user.setEmail(userDto.getEmail());
+            user.setAddress(userDto.getAddress());
+            repository.save(user);
+        } else {
+            throw new RuntimeException("User not found with id: " + id);
+        }
     }
 
     public void removeUser(Integer id) {

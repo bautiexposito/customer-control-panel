@@ -21,6 +21,7 @@ async function login() {
     let token = await response.text();
   
     sessionStorage.token = token;
+
     window.location.href = '/customers.html';
   }
   

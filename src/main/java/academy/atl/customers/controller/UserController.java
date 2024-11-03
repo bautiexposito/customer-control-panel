@@ -1,5 +1,6 @@
 package academy.atl.customers.controller;
 
+import academy.atl.customers.dto.UserDto;
 import academy.atl.customers.model.User;
 import academy.atl.customers.service.UserService;
 import academy.atl.customers.utils.JWTUtil;
@@ -33,13 +34,13 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public void addUser(@RequestBody UserDto userDto) {
+        userService.addUser(userDto);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable Integer id, @RequestBody User updateUser) {
-        userService.updateUser(id, updateUser);
+    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {
+        userService.updateUser(id, userDto);
     }
 
     @DeleteMapping("/{id}")

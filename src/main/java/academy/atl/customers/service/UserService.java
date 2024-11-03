@@ -1,5 +1,6 @@
 package academy.atl.customers.service;
 
+import academy.atl.customers.dto.UserDto;
 import academy.atl.customers.model.User;
 
 import java.util.ArrayList;
@@ -13,9 +14,9 @@ public interface UserService {
 
     List<User> searchUser(String email, String address);
 
-    void addUser(User user);
+    void addUser(UserDto userDto);
 
-    void updateUser(Integer id, User updateUser);
+    void updateUser(Integer id, UserDto userDto);
 
     void removeUser(Integer id);
 

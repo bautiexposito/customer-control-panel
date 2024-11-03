@@ -1,7 +1,8 @@
 package academy.atl.customers.service;
 
+import academy.atl.customers.dto.CustomerDto;
 import academy.atl.customers.model.Customer;
-import academy.atl.customers.persistence.CustomerDao;
+import academy.atl.customers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +37,23 @@ public class CustomerServiceImpl implements CustomerService{
         return repository.findByEmailOrAddress(email, address);
     }
 
-    public void addCustomer(Customer customer) {
+    public void addCustomer(CustomerDto customerDto) {
+        Customer customer = new Customer(customerDto);
         repository.save(customer);
     }
 
-    public void updateCustomer(Integer id, Customer updateCustomer) {
-        updateCustomer.setId(id);
-        repository.save(updateCustomer);
+    public void updateCustomer(Integer id, CustomerDto customerDto) {
+        Optional<Customer> optionalCustomer = repository.findById(id);
+        if (optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            customer.setFirstName(customerDto.getFirstName());
+            customer.setLastName(customerDto.getLastName());
+            customer.setEmail(customerDto.getEmail());
+            customer.setAddress(customerDto.getAddress());
+            repository.save(customer);
+        } else {
+            throw new RuntimeException("Customer not found with id: " + id);
+        }
     }
 
     public void removeCustomer(Integer id) {

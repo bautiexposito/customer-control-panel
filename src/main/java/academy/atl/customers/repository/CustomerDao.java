@@ -1,4 +1,4 @@
-package academy.atl.customers.persistence;
+package academy.atl.customers.repository;
 
 import academy.atl.customers.model.Customer;
 import org.springframework.data.jpa.repository.Query;

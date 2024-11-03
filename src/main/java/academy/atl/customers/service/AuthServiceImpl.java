@@ -1,7 +1,7 @@
 package academy.atl.customers.service;
 
 import academy.atl.customers.model.User;
-import academy.atl.customers.persistence.UserDao;
+import academy.atl.customers.repository.UserDao;
 import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,7 @@
 package academy.atl.customers.controller;
 
 import academy.atl.customers.Connection;
+import academy.atl.customers.dto.CustomerDto;
 import academy.atl.customers.model.Customer;
 import academy.atl.customers.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,13 @@ public class CustomerController {
     }
 
     @PostMapping
-    public void addCustomer(@RequestBody Customer customer) {
-        customerService.addCustomer(customer);
+    public void addCustomer(@RequestBody CustomerDto customerDto) {
+        customerService.addCustomer(customerDto);
     }
 
     @PutMapping("/{id}")
-    public void updateCustomer(@PathVariable Integer id, @RequestBody Customer updateCustomer) {
-        customerService.updateCustomer(id, updateCustomer);
+    public void updateCustomer(@PathVariable Integer id, @RequestBody CustomerDto customerDto) {
+        customerService.updateCustomer(id, customerDto);
     }
 
     @DeleteMapping("/{id}")
