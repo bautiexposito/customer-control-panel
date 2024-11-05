@@ -1,7 +1,10 @@
 package academy.atl.customers.controller;
 
-import academy.atl.customers.Connection;
+import academy.atl.customers.controller.validator.CustomerValidator;
 import academy.atl.customers.dto.CustomerDto;
+import academy.atl.customers.exception.InvalidEmailException;
+import academy.atl.customers.exception.MinimumAmountOfCharactersException;
+import academy.atl.customers.exception.RequiredFieldException;
 import academy.atl.customers.model.Customer;
 import academy.atl.customers.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private CustomerValidator customerValidator;
 
     @GetMapping
     public List<Customer> getAllCustomers() {
@@ -34,12 +39,14 @@ public class CustomerController {
     }
 
     @PostMapping
-    public void addCustomer(@RequestBody CustomerDto customerDto) {
+    public void addCustomer(@RequestBody CustomerDto customerDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException {
+        customerValidator.validate(customerDto);
         customerService.addCustomer(customerDto);
     }
 
     @PutMapping("/{id}")
-    public void updateCustomer(@PathVariable Integer id, @RequestBody CustomerDto customerDto) {
+    public void updateCustomer(@PathVariable Integer id, @RequestBody CustomerDto customerDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException {
+        customerValidator.validate(customerDto);
         customerService.updateCustomer(id, customerDto);
     }
 

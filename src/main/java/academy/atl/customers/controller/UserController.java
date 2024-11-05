@@ -1,6 +1,10 @@
 package academy.atl.customers.controller;
 
+import academy.atl.customers.controller.validator.UserValidator;
 import academy.atl.customers.dto.UserDto;
+import academy.atl.customers.exception.InvalidEmailException;
+import academy.atl.customers.exception.MinimumAmountOfCharactersException;
+import academy.atl.customers.exception.RequiredFieldException;
 import academy.atl.customers.model.User;
 import academy.atl.customers.service.UserService;
 import academy.atl.customers.utils.JWTUtil;
@@ -16,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserValidator userValidator;
 
     @GetMapping
     public List<User> getAllUsers(String token) {
@@ -34,12 +40,14 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody UserDto userDto) {
+    public void addUser(@RequestBody UserDto userDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException {
+        userValidator.validate(userDto);
         userService.addUser(userDto);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {
+    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException {
+        userValidator.validate(userDto);
         userService.updateUser(id, userDto);
     }
 
