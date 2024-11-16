@@ -8,7 +8,6 @@ import academy.atl.customers.exception.RequiredFieldException;
 import academy.atl.customers.exception.UserNotFoundException;
 import academy.atl.customers.model.User;
 import academy.atl.customers.service.UserService;
-import academy.atl.customers.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
