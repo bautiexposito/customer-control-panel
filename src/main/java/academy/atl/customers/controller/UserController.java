@@ -5,6 +5,7 @@ import academy.atl.customers.dto.UserDto;
 import academy.atl.customers.exception.InvalidEmailException;
 import academy.atl.customers.exception.MinimumAmountOfCharactersException;
 import academy.atl.customers.exception.RequiredFieldException;
+import academy.atl.customers.exception.UserNotFoundException;
 import academy.atl.customers.model.User;
 import academy.atl.customers.service.UserService;
 import academy.atl.customers.utils.JWTUtil;
@@ -46,13 +47,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException {
+    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException, UserNotFoundException {
         userValidator.validate(userDto);
         userService.updateUser(id, userDto);
     }
 
     @DeleteMapping("/{id}")
-    public void removeUser(@PathVariable Integer id) {
+    public void removeUser(@PathVariable Integer id) throws UserNotFoundException{
         userService.removeUser(id);
     }
 }

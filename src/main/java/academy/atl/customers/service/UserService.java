@@ -1,6 +1,7 @@
 package academy.atl.customers.service;
 
 import academy.atl.customers.dto.UserDto;
+import academy.atl.customers.exception.UserNotFoundException;
 import academy.atl.customers.model.User;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public interface UserService {
 
     void addUser(UserDto userDto);
 
-    void updateUser(Integer id, UserDto userDto);
+    void updateUser(Integer id, UserDto userDto) throws UserNotFoundException;
 
-    void removeUser(Integer id);
+    void removeUser(Integer id) throws UserNotFoundException;
 
 }

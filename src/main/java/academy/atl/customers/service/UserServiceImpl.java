@@ -1,6 +1,7 @@
 package academy.atl.customers.service;
 
 import academy.atl.customers.dto.UserDto;
+import academy.atl.customers.exception.UserNotFoundException;
 import academy.atl.customers.model.User;
 import academy.atl.customers.repository.UserDao;
 import com.google.common.hash.Hashing;
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService{
         repository.save(user);
     }
 
-    public void updateUser(Integer id, UserDto userDto) {
+    public void updateUser(Integer id, UserDto userDto) throws UserNotFoundException{
         Optional<User> optionalUser = repository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -61,12 +62,14 @@ public class UserServiceImpl implements UserService{
             user.setAddress(userDto.getAddress());
             repository.save(user);
         } else {
-            throw new RuntimeException("User not found with id: " + id);
+            throw new UserNotFoundException("User not found with id: " + id);
         }
     }
 
-    public void removeUser(Integer id) {
-        repository.deleteById(id);
+    public void removeUser(Integer id) throws UserNotFoundException{
+        User user = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        repository.delete(user);
     }
 
 }

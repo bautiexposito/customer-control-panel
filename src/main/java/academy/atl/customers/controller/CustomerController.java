@@ -2,6 +2,7 @@ package academy.atl.customers.controller;
 
 import academy.atl.customers.controller.validator.CustomerValidator;
 import academy.atl.customers.dto.CustomerDto;
+import academy.atl.customers.exception.CustomerNotFoundException;
 import academy.atl.customers.exception.InvalidEmailException;
 import academy.atl.customers.exception.MinimumAmountOfCharactersException;
 import academy.atl.customers.exception.RequiredFieldException;
@@ -45,13 +46,13 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public void updateCustomer(@PathVariable Integer id, @RequestBody CustomerDto customerDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException {
+    public void updateCustomer(@PathVariable Integer id, @RequestBody CustomerDto customerDto) throws RequiredFieldException, MinimumAmountOfCharactersException, InvalidEmailException, CustomerNotFoundException {
         customerValidator.validate(customerDto);
         customerService.updateCustomer(id, customerDto);
     }
 
     @DeleteMapping("/{id}")
-    public void removeCustomer(@PathVariable Integer id) {
+    public void removeCustomer(@PathVariable Integer id) throws CustomerNotFoundException {
         customerService.removeCustomer(id);
     }
 

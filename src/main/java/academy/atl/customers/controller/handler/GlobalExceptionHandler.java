@@ -1,13 +1,10 @@
 package academy.atl.customers.controller.handler;
 
-import academy.atl.customers.exception.InvalidEmailException;
-import academy.atl.customers.exception.MinimumAmountOfCharactersException;
-import academy.atl.customers.exception.RequiredFieldException;
+import academy.atl.customers.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -22,6 +19,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String nombreException = ex.getClass().getSimpleName();
         error.agregarInfoException(nombreException, ex.getMessage());
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {CustomerNotFoundException.class, UserNotFoundException.class})
+    protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
+        CustomApiError error = new CustomApiError();
+        String nombreException = ex.getClass().getSimpleName();
+        error.agregarInfoException(nombreException, ex.getMessage());
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @Override

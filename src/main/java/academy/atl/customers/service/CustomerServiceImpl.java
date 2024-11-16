@@ -1,6 +1,7 @@
 package academy.atl.customers.service;
 
 import academy.atl.customers.dto.CustomerDto;
+import academy.atl.customers.exception.CustomerNotFoundException;
 import academy.atl.customers.model.Customer;
 import academy.atl.customers.repository.CustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService{
         repository.save(customer);
     }
 
-    public void updateCustomer(Integer id, CustomerDto customerDto) {
+    public void updateCustomer(Integer id, CustomerDto customerDto) throws CustomerNotFoundException{
         Optional<Customer> optionalCustomer = repository.findById(id);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
@@ -52,12 +53,14 @@ public class CustomerServiceImpl implements CustomerService{
             customer.setAddress(customerDto.getAddress());
             repository.save(customer);
         } else {
-            throw new RuntimeException("Customer not found with id: " + id);
+            throw new CustomerNotFoundException("Customer not found with id: " + id);
         }
     }
 
-    public void removeCustomer(Integer id) {
-        repository.deleteById(id);
+    public void removeCustomer(Integer id) throws CustomerNotFoundException{
+        Customer customer = repository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id: " + id));
+            repository.delete(customer);
     }
 
 }

@@ -1,6 +1,7 @@
 package academy.atl.customers.service;
 
 import academy.atl.customers.dto.CustomerDto;
+import academy.atl.customers.exception.CustomerNotFoundException;
 import academy.atl.customers.model.Customer;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public interface CustomerService {
 
     void addCustomer(CustomerDto customerDto);
 
-    void updateCustomer(Integer id, CustomerDto customerDto);
+    void updateCustomer(Integer id, CustomerDto customerDto) throws CustomerNotFoundException;
 
-    void removeCustomer(Integer id);
+    void removeCustomer(Integer id) throws CustomerNotFoundException;
 
 }
