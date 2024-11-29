@@ -17,5 +17,6 @@ Este proyecto simula un panel de control para gestionar clientes, integrando fun
 - Manejo centralizado de excepciones: A través de handlers personalizados.
 - Pruebas unitarias: Garantizando la funcionalidad y robustez del proyecto.
 
-📄 Documentación
-Toda la documentación del proyecto, incluyendo ejemplos de solicitudes y respuestas, estará disponible en un enlace de Postman.
+📄 Documentación  
+Toda la documentación del proyecto, incluyendo ejemplos de solicitudes y respuestas, está disponible en el siguiente enlace de Postman:  
+https://documenter.getpostman.com/view/24383801/2sAYBYe9be
